@@ -1,4 +1,3 @@
-package Championnat;
 //Exercice 2_2
 
 public class Main {
