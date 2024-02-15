@@ -19,6 +19,10 @@ public class Ville {
         this.coureurs = coureurs;
     }
 
+    public void ajoutCoureur(Coureur coureur){
+        this.coureurs.add(coureur);
+    }
+
     public String getNom() {
         return nom;
     }

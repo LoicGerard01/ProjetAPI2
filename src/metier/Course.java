@@ -78,20 +78,63 @@ public class Course {
         return Objects.hash(idCourse);
     }
 
-    public List<Coureur> listeCoureursPlaceGain(){
+    public List<CoureurPlaceGain> listeCoureursPlaceGain(){
         // renvoyer un liste qui contient les trois variables
+       List<CoureurPlaceGain> CPG = new ArrayList<>();
+
+       for(int i=0;i<classement.listeCoureurs.size();i++){
+           Coureur coureur = classement.listeCoureurs.get(i);
+           int place = classement.place[i];
+           BigDecimal gain = classement.gain[i];
+
+           CPG.add(new CoureurPlaceGain(coureur,place,gain));
+       }
+       return CPG;
+    }
+
+    public BigDecimal gainTotal(){
+
+        BigDecimal sum = BigDecimal.TWO;
+
+        if (classement != null && classement.gain != null) {
+            for (BigDecimal a : classement.gain) {
+                if (a != null) {
+                    sum = sum.add(a);  // Ajoutez la valeur actuelle à la somme
+                }
+            }
+        }
+        return sum;
+    }
+    public Coureur vainqueur(){
+        Coureur vainqueur ;
+
+        for (int i = 0 ;i<this.classement.place.length;i++){
+            if (this.classement.place[i] == 1){
+                vainqueur = this.classement.listeCoureurs.get(i);
+                return vainqueur;
+            }
+        }
+        return null;
+    }
+
+
+
+
+    public void addCoureur(Coureur coureur){
+        this.addCoureur(coureur);
+    }
+    public void supCoureur(Coureur coureur){}
+
+    // public void resultat(Coureur coureur,int place,BigDecimal gain){} // on demande quel coureur a encoder sa place et ses gains
+
+    // public void modif(Coureur coureur,int place,BigDecimal gain){}
+
+    public void addVille(Ville ville){
+        this.addVille(ville);
+    }
+    public void supVille(Ville ville){
 
     }
-    public void gainTotal(){
-        BigDecimal sum = BigDecimal.ZERO;
-    }
-    public void vainqueur(){}
-    public void addCoureur(Coureur coureur){}
-    public void supCoureur(Coureur coureur){}
-    // public void resultat(Coureur coureur,){} // on demande quel coureur a encoder sa place et ses gains
-    // public void modif(Coureur coureur,){}
-    public void addVille(Ville ville){}
-    public void supVille(Ville ville){}
     public void modifVille(LocalDate date){
 
     }
