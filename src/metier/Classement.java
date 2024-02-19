@@ -9,12 +9,22 @@ import java.util.Objects;
 
 public class Classement {
     protected int idClassement;
-    protected int[] place;
-    protected BigDecimal[] gain;
+    protected List<Integer> place;
+    protected List<BigDecimal> gain;
     protected List<Coureur> listeCoureurs = new ArrayList<>();
 
+    public Classement(int idClassement){
+        this.idClassement = idClassement;
+    }
 
-    
+
+    public Classement(int idClassement, List<Integer> place, List<BigDecimal> gain, List<Coureur> listeCoureurs) {
+        this.idClassement = idClassement;
+        this.place = place;
+        this.gain = gain;
+        this.listeCoureurs = listeCoureurs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,19 +46,19 @@ public class Classement {
         this.idClassement = idClassement;
     }
 
-    public int[] getPlace() {
+    public List<Integer> getPlace() {
         return place;
     }
 
-    public void setPlace(int[] place) {
+    public void setPlace(List<Integer> place) {
         this.place = place;
     }
 
-    public BigDecimal[] getGain() {
+    public List<BigDecimal> getGain() {
         return gain;
     }
 
-    public void setGain(BigDecimal[] gain) {
+    public void setGain(List<BigDecimal> gain) {
         this.gain = gain;
     }
 
@@ -60,13 +70,12 @@ public class Classement {
         this.listeCoureurs = listeCoureurs;
     }
 
-
     @Override
     public String toString() {
         return "Classement{" +
                 "idClassement=" + idClassement +
-                ", place=" + Arrays.toString(place) +
-                ", gain=" + Arrays.toString(gain) +
+                ", place=" + place +
+                ", gain=" + gain +
                 ", listeCoureurs=" + listeCoureurs +
                 '}';
     }

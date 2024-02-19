@@ -11,6 +11,12 @@ public class Coureur {
     protected String nationalite;
     protected Ville ville;
 
+
+    public Coureur(String matricule, String nom , String prenom) {
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom=prenom;
+    }
     public Coureur(String matricule, String nom, String prenom, LocalDate dateNaiss, String nationalite, Ville ville) {
         this.matricule = matricule;
         this.nom = nom;

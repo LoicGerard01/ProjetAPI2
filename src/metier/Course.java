@@ -78,68 +78,84 @@ public class Course {
         return Objects.hash(idCourse);
     }
 
-    public List<CoureurPlaceGain> listeCoureursPlaceGain(){
+
+    public List<CoureurPlaceGain> listeCoureursPlaceGain() {
         // renvoyer un liste qui contient les trois variables
-       List<CoureurPlaceGain> CPG = new ArrayList<>();
+        List<CoureurPlaceGain> CPG = new ArrayList<>();
 
-       for(int i=0;i<classement.listeCoureurs.size();i++){
-           Coureur coureur = classement.listeCoureurs.get(i);
-           int place = classement.place[i];
-           BigDecimal gain = classement.gain[i];
+        for (int i = 0; i < classement.listeCoureurs.size(); i++) {
+            Coureur coureur = classement.listeCoureurs.get(i);
+            int place = classement.place.get(i);
+            BigDecimal gain = classement.gain.get(i);
 
-           CPG.add(new CoureurPlaceGain(coureur,place,gain));
-       }
-       return CPG;
+            CPG.add(new CoureurPlaceGain(coureur, place, gain));
+        }
+        return CPG;
     }
 
-    public BigDecimal gainTotal(){
+    public BigDecimal gainTotal() {
 
-        BigDecimal sum = BigDecimal.TWO;
+        BigDecimal totalGain = BigDecimal.ZERO;
 
-        if (classement != null && classement.gain != null) {
-            for (BigDecimal a : classement.gain) {
-                if (a != null) {
-                    sum = sum.add(a);  // Ajoutez la valeur actuelle à la somme
-                }
+        for (BigDecimal a : classement.gain) {
+            if (a != null) {
+                totalGain = totalGain.add(a);  // Ajoute la valeur actuelle à la somme
             }
         }
-        return sum;
-    }
-    public Coureur vainqueur(){
-        Coureur vainqueur ;
 
-        for (int i = 0 ;i<this.classement.place.length;i++){
-            if (this.classement.place[i] == 1){
+        return totalGain;
+    }
+
+    public Coureur vainqueur() {
+        Coureur vainqueur;
+
+        for (int i = 0; i < this.classement.place.size(); i++) {
+            if (this.classement.place.get(i) == 1) {
                 vainqueur = this.classement.listeCoureurs.get(i);
                 return vainqueur;
             }
         }
+        System.out.println("Vainqueur non trouvé");
         return null;
     }
 
 
-
-
-    public void addCoureur(Coureur coureur){
-        this.addCoureur(coureur);
+    public void addCoureur(Coureur coureur) {
+        this.classement.listeCoureurs.add(coureur);
     }
-    public void supCoureur(Coureur coureur){}
 
-    // public void resultat(Coureur coureur,int place,BigDecimal gain){} // on demande quel coureur a encoder sa place et ses gains
-
-    // public void modif(Coureur coureur,int place,BigDecimal gain){}
-
-    public void addVille(Ville ville){
-        this.addVille(ville);
+    public void supCoureur(Coureur coureur) {
+        this.classement.listeCoureurs.remove(coureur);
     }
-    public void supVille(Ville ville){
+
+    public void resultat(Coureur coureur,int place,BigDecimal gain){
+        classement.listeCoureurs.add(coureur);
+        classement.place.add(place);
+        classement.gain.add(gain);
 
     }
-    public void modifVille(LocalDate date){
+
+    public void modif(Coureur coureur,int place,BigDecimal gain){
 
     }
-    public void listeVille(){}
-    public boolean classementComplet(){
+
+    public void addVille(Ville ville) {
+        this.infos.villes.add(ville);
+    }
+
+    public void supVille(Ville ville) {
+        this.infos.villes.remove(ville);
+    }
+
+    public void modifVille(LocalDate date) {
+
+    }
+
+    public List<Ville> listeVille() {
+        return this.infos.getVilles();
+    }
+
+    public boolean classementComplet() {
 
         return false;
     }

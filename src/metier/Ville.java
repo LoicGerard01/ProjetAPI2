@@ -11,6 +11,13 @@ public class Ville {
     protected String pays;
     protected List<Coureur> coureurs;
 
+    public Ville(int idVille, String nom, double latitute, double longitude) {
+        this.idVille = idVille;
+        this.nom = nom;
+        this.latitute = latitute;
+        this.longitude = longitude;
+    }
+
     public Ville(String nom, double latitute, double longitude, String pays, List<Coureur> coureurs) {
         this.nom = nom;
         this.latitute = latitute;

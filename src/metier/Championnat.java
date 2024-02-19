@@ -11,6 +11,11 @@ public class Championnat {
     protected List<Course> listeCourse = new ArrayList<>();
     protected List<Championnat> listeChampionnat = new ArrayList<>();
 
+    public Championnat(int id,String nom){
+        this.id = id;
+        this.nom = nom;
+    }
+
 
     public Championnat(int id, String nom, List<Course> listeCourse, List<Championnat> listeChampionnat) {
         this.id = id;
