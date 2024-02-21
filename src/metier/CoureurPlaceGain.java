@@ -3,14 +3,18 @@ package metier;
 import java.math.BigDecimal;
 
 public class CoureurPlaceGain {
+    protected int idCPG;
+    private static int autoId = 1;
     protected Coureur coureur;
     protected int place;
     protected BigDecimal gain;
 
     public CoureurPlaceGain(Coureur coureur, int place, BigDecimal gain) {
+        this.idCPG=autoId++;
         this.coureur = coureur;
         this.place = place;
         this.gain = gain;
+
     }
 
     public Coureur getCoureur() {

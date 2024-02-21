@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class Infos {
+    private static int autoId = 1;
     protected int idInfos;
     protected LocalDate dateDepart;
     protected List<Ville> villes;
 
-    public Infos(int idInfos, LocalDate dateDepart, List<Ville> villes) {
-        this.idInfos = idInfos;
+    public Infos(LocalDate dateDepart, List<Ville> villes) {
+        this.idInfos = autoId++;
         this.dateDepart = dateDepart;
         this.villes = villes;
     }

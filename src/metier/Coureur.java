@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Coureur {
+    private static int autoId = 1;
+    protected int idCoureur;
     protected String matricule;   // obligatoire
     protected String nom;     // obligatoire
     protected String prenom;      // obligatoire
@@ -13,11 +15,13 @@ public class Coureur {
 
 
     public Coureur(String matricule, String nom , String prenom) {
+        this.idCoureur=autoId++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom=prenom;
     }
     public Coureur(String matricule, String nom, String prenom, LocalDate dateNaiss, String nationalite, Ville ville) {
+        this.idCoureur=autoId++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;

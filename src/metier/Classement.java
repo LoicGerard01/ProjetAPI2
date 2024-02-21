@@ -2,24 +2,20 @@ package metier;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Classement {
+    private static int autoId = 1;
     protected int idClassement;
-    protected List<Integer> place;
-    protected List<BigDecimal> gain;
+    protected List<Integer> place = new ArrayList<>();
+    protected List<BigDecimal> gain = new ArrayList<>();
     protected List<Coureur> listeCoureurs = new ArrayList<>();
 
-    public Classement(int idClassement){
-        this.idClassement = idClassement;
+    public Classement(){
+        this.idClassement = autoId++;
     }
-
-
-    public Classement(int idClassement, List<Integer> place, List<BigDecimal> gain, List<Coureur> listeCoureurs) {
-        this.idClassement = idClassement;
+    public Classement(List<Integer> place, List<BigDecimal> gain, List<Coureur> listeCoureurs) {
+        this.idClassement = autoId++;
         this.place = place;
         this.gain = gain;
         this.listeCoureurs = listeCoureurs;

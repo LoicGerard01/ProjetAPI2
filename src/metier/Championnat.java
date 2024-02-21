@@ -6,26 +6,27 @@ import java.util.Objects;
 //Les courses appartiennent à des championnats (id:int,nom:String) qui peuvent
 //eux-mêmes comporter des championnats. Totaliser le prize money .
 public class Championnat {
+    private static int autoId = 1;
     protected int id;
     protected String nom;
     protected List<Course> listeCourse = new ArrayList<>();
     protected List<Championnat> listeChampionnat = new ArrayList<>();
 
-    public Championnat(int id,String nom){
-        this.id = id;
+    public Championnat(String nom){
+        this.id = autoId++;
         this.nom = nom;
     }
 
 
-    public Championnat(int id, String nom, List<Course> listeCourse, List<Championnat> listeChampionnat) {
-        this.id = id;
+    public Championnat(String nom, List<Course> listeCourse, List<Championnat> listeChampionnat) {
+        this.id = autoId++;
         this.nom = nom;
         this.listeCourse = listeCourse;
         this.listeChampionnat = listeChampionnat;
     }
 
-    public Championnat(int id, String nom, List<Course> listeCourse) {
-        this.id = id;
+    public Championnat(String nom, List<Course> listeCourse) {
+        this.id = autoId++;
         this.nom = nom;
         this.listeCourse = listeCourse;
     }

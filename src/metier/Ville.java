@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Ville {
+    private static int autoId = 1;
     protected int idVille;
     protected String nom;
     protected double latitute;
@@ -12,13 +13,14 @@ public class Ville {
     protected List<Coureur> coureurs;
 
     public Ville(int idVille, String nom, double latitute, double longitude) {
-        this.idVille = idVille;
+        this.idVille = autoId++;
         this.nom = nom;
         this.latitute = latitute;
         this.longitude = longitude;
     }
 
     public Ville(String nom, double latitute, double longitude, String pays, List<Coureur> coureurs) {
+        this.idVille = autoId++;
         this.nom = nom;
         this.latitute = latitute;
         this.longitude = longitude;
@@ -75,11 +77,11 @@ public class Ville {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ville ville = (Ville) o;
-        return idVille == ville.idVille;
+        return Double.compare(latitute, ville.latitute) == 0 && Double.compare(longitude, ville.longitude) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idVille);
+        return Objects.hash(latitute, longitude);
     }
 }

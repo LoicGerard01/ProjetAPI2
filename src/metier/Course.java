@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Course {
+    private static int autoId = 1;
     protected int idCourse;
     protected String nom;
     protected BigDecimal priceMoney;
@@ -17,6 +18,7 @@ public class Course {
     protected Classement classement;
 
     public Course(String nom, BigDecimal priceMoney, int km, Infos infos, Classement classement) {
+        this.idCourse = autoId++;
         this.nom = nom;
         this.priceMoney = priceMoney;
         priceMoney.setScale(2, RoundingMode.HALF_UP);
@@ -80,7 +82,7 @@ public class Course {
 
 
     public List<CoureurPlaceGain> listeCoureursPlaceGain() {
-        // renvoyer un liste qui contient les trois variables
+        // renvoie une liste qui contient les trois variables
         List<CoureurPlaceGain> CPG = new ArrayList<>();
 
         for (int i = 0; i < classement.listeCoureurs.size(); i++) {
@@ -98,9 +100,7 @@ public class Course {
         BigDecimal totalGain = BigDecimal.ZERO;
 
         for (BigDecimal a : classement.gain) {
-            if (a != null) {
-                totalGain = totalGain.add(a);  // Ajoute la valeur actuelle à la somme
-            }
+            totalGain = totalGain.add(a);
         }
 
         return totalGain;
@@ -121,42 +121,53 @@ public class Course {
 
 
     public void addCoureur(Coureur coureur) {
-        this.classement.listeCoureurs.add(coureur);
+        classement.getListeCoureurs().add(coureur);
     }
 
     public void supCoureur(Coureur coureur) {
-        this.classement.listeCoureurs.remove(coureur);
+        classement.getListeCoureurs().remove(coureur);
     }
 
     public void resultat(Coureur coureur,int place,BigDecimal gain){
-        classement.listeCoureurs.add(coureur);
-        classement.place.add(place);
-        classement.gain.add(gain);
+        classement.getListeCoureurs().add(coureur);
+        classement.getPlace().add(place);
+        classement.getGain().add(gain);
 
     }
 
     public void modif(Coureur coureur,int place,BigDecimal gain){
 
+        int pos = classement.getListeCoureurs().indexOf(coureur);
+        if(pos == -1){
+            System.out.println("Le coureur n'est pas dans la liste");
+        }
+        else{
+            classement.getPlace().set(pos,place);
+            classement.getGain().set(pos,gain);
+        }
     }
 
     public void addVille(Ville ville) {
-        this.infos.villes.add(ville);
+        infos.getVilles().add(ville);
     }
 
     public void supVille(Ville ville) {
-        this.infos.villes.remove(ville);
+        infos.getVilles().remove(ville);
     }
 
     public void modifVille(LocalDate date) {
-
+        infos.setDateDepart(date);
     }
 
     public List<Ville> listeVille() {
-        return this.infos.getVilles();
+        return infos.getVilles();
     }
 
     public boolean classementComplet() {
-
+        if(classement.listeCoureurs.size() == classement.place.size()){
+            return true;
+        }
         return false;
     }
 }
+
