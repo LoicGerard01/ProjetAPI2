@@ -14,17 +14,23 @@ public class Course {
     protected String nom;
     protected BigDecimal priceMoney;
     protected int km;
-    protected Infos infos;
-    protected Classement classement;
+    protected List<Infos> listeInfos;
+    protected List<Classement> listeClassement;
 
-    public Course(String nom, BigDecimal priceMoney, int km, Infos infos, Classement classement) {
+    public Course(String nom, BigDecimal priceMoney, int km, List<Infos> infos, List<Classement> classement) {
         this.idCourse = autoId++;
         this.nom = nom;
         this.priceMoney = priceMoney;
-        priceMoney.setScale(2, RoundingMode.HALF_UP);
         this.km = km;
-        this.infos = infos;
-        this.classement = classement;
+        this.listeInfos = infos;
+        this.listeClassement = classement;
+    }
+
+    public Course(String nom, BigDecimal priceMoney, int km) {
+        this.idCourse = autoId++;
+        this.nom = nom;
+        this.priceMoney = priceMoney;
+        this.km = km;
     }
 
     public String getNom() {
@@ -51,20 +57,20 @@ public class Course {
         this.km = km;
     }
 
-    public Infos getInfos() {
-        return infos;
+    public List<Infos> getListeInfos() {
+        return listeInfos;
     }
 
-    public void setInfos(Infos infos) {
-        this.infos = infos;
+    public void setListeInfos(List<Infos> listeInfos) {
+        this.listeInfos = listeInfos;
     }
 
-    public Classement getClassement() {
-        return classement;
+    public List<Classement> getListeClassement() {
+        return listeClassement;
     }
 
-    public void setClassement(Classement classement) {
-        this.classement = classement;
+    public void setClassement(List<Classement> listeClassement) {
+        this.listeClassement = listeClassement;
     }
 
     @Override
@@ -85,10 +91,10 @@ public class Course {
         // renvoie une liste qui contient les trois variables
         List<CoureurPlaceGain> CPG = new ArrayList<>();
 
-        for (int i = 0; i < classement.listeCoureurs.size(); i++) {
-            Coureur coureur = classement.listeCoureurs.get(i);
-            int place = classement.place.get(i);
-            BigDecimal gain = classement.gain.get(i);
+        for (int i = 0; i < listeClassement.size(); i++) {
+            Coureur coureur = listeClassement.get(i).getCoureur();
+            int place = listeClassement.get(i).getPlace();
+            BigDecimal gain = listeClassement.get(i).getGain();
 
             CPG.add(new CoureurPlaceGain(coureur, place, gain));
         }
@@ -97,9 +103,11 @@ public class Course {
 
     public BigDecimal gainTotal() {
 
+        BigDecimal a = BigDecimal.ZERO;
         BigDecimal totalGain = BigDecimal.ZERO;
 
-        for (BigDecimal a : classement.gain) {
+        for (int i = 0; i < listeClassement.size(); i++) {
+            a = listeClassement.get(i).gain;
             totalGain = totalGain.add(a);
         }
 
@@ -109,9 +117,9 @@ public class Course {
     public Coureur vainqueur() {
         Coureur vainqueur;
 
-        for (int i = 0; i < this.classement.place.size(); i++) {
-            if (this.classement.place.get(i) == 1) {
-                vainqueur = this.classement.listeCoureurs.get(i);
+        for (int i = 0; i < listeClassement.size(); i++) {
+            if (listeClassement.get(i).getPlace() == 1) {
+                vainqueur = listeClassement.get(i).getCoureur();
                 return vainqueur;
             }
         }
@@ -121,53 +129,63 @@ public class Course {
 
 
     public void addCoureur(Coureur coureur) {
-        classement.getListeCoureurs().add(coureur);
+        listeClassement.add(new Classement(coureur));
     }
 
     public void supCoureur(Coureur coureur) {
-        classement.getListeCoureurs().remove(coureur);
+        listeClassement.remove(coureur);
     }
 
-    public void resultat(Coureur coureur,int place,BigDecimal gain){
-        classement.getListeCoureurs().add(coureur);
-        classement.getPlace().add(place);
-        classement.getGain().add(gain);
+    public void resultat(Coureur coureur, int place, BigDecimal gain) {
+        listeClassement.add(new Classement(place, gain, coureur));
 
     }
 
-    public void modif(Coureur coureur,int place,BigDecimal gain){
+    public void modif(Coureur coureur, int place, BigDecimal gain) {
 
-        int pos = classement.getListeCoureurs().indexOf(coureur);
-        if(pos == -1){
+        int pos = listeClassement.indexOf(coureur);
+        if (pos == -1) {
             System.out.println("Le coureur n'est pas dans la liste");
-        }
-        else{
-            classement.getPlace().set(pos,place);
-            classement.getGain().set(pos,gain);
+        } else {
+            listeClassement.get(pos).setPlace(place);
+            listeClassement.get(pos).setGain(gain);
         }
     }
 
     public void addVille(Ville ville) {
-        infos.getVilles().add(ville);
+        listeInfos.add(new Infos(ville));
     }
 
     public void supVille(Ville ville) {
-        infos.getVilles().remove(ville);
+        listeInfos.remove(ville);
     }
 
-    public void modifVille(LocalDate date) {
-        infos.setDateDepart(date);
+    public void modifVille(LocalDate date,Ville ville) {
+        for(int i = 0;i<listeInfos.size();i++){
+           if(listeInfos.get(i).getDateDepart().equals(date)){
+               listeInfos.get(i).setVille(ville);
+           }
+        }
     }
 
     public List<Ville> listeVille() {
-        return infos.getVilles();
+        List<Ville> lville = new ArrayList<>();
+        for (int i = 0; i < listeInfos.size(); i++) {
+            lville.add(listeInfos.get(i).getVille());
+        }
+        return lville;
     }
 
     public boolean classementComplet() {
-        if(classement.listeCoureurs.size() == classement.place.size()){
-            return true;
-        }
-        return false;
+        int i = 0;
+        do {
+            if (listeClassement.get(i).getPlace() == 0) {
+                return false;
+            }
+        } while (i < listeClassement.size());
+
+        return true;
+
     }
 }
 

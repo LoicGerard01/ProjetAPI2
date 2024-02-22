@@ -7,18 +7,23 @@ import java.util.*;
 public class Classement {
     private static int autoId = 1;
     protected int idClassement;
-    protected List<Integer> place = new ArrayList<>();
-    protected List<BigDecimal> gain = new ArrayList<>();
-    protected List<Coureur> listeCoureurs = new ArrayList<>();
+    protected int place = 0;
+    protected BigDecimal gain;
+    protected Coureur coureur;
 
     public Classement(){
         this.idClassement = autoId++;
     }
-    public Classement(List<Integer> place, List<BigDecimal> gain, List<Coureur> listeCoureurs) {
+    public Classement(Coureur coureur){
+        this.idClassement = autoId++;
+        this.coureur = coureur;
+    }
+
+    public Classement(int place, BigDecimal gain, Coureur coureur) {
         this.idClassement = autoId++;
         this.place = place;
         this.gain = gain;
-        this.listeCoureurs = listeCoureurs;
+        this.coureur = coureur;
     }
 
     @Override
@@ -42,37 +47,35 @@ public class Classement {
         this.idClassement = idClassement;
     }
 
-    public List<Integer> getPlace() {
+    public int getPlace() {
         return place;
     }
 
-    public void setPlace(List<Integer> place) {
+    public void setPlace(int place) {
         this.place = place;
     }
 
-    public List<BigDecimal> getGain() {
+    public BigDecimal getGain() {
         return gain;
     }
 
-    public void setGain(List<BigDecimal> gain) {
+    public void setGain(BigDecimal gain) {
         this.gain = gain;
     }
 
-    public List<Coureur> getListeCoureurs() {
-        return listeCoureurs;
+    public Coureur getCoureur() {
+        return coureur;
     }
 
-    public void setListeCoureurs(List<Coureur> listeCoureurs) {
-        this.listeCoureurs = listeCoureurs;
+    public void setCoureur(Coureur coureur) {
+        this.coureur = coureur;
     }
-
     @Override
     public String toString() {
         return "Classement{" +
-                "idClassement=" + idClassement +
-                ", place=" + place +
+                "place=" + place +
                 ", gain=" + gain +
-                ", listeCoureurs=" + listeCoureurs +
+                ", coureur=" + coureur +
                 '}';
     }
 }

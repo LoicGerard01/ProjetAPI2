@@ -8,12 +8,16 @@ public class Infos {
     private static int autoId = 1;
     protected int idInfos;
     protected LocalDate dateDepart;
-    protected List<Ville> villes;
+    protected Ville ville;
 
-    public Infos(LocalDate dateDepart, List<Ville> villes) {
-        this.idInfos = autoId++;
+    public Infos(LocalDate dateDepart, Ville ville) {
+        this.idInfos=autoId++;
         this.dateDepart = dateDepart;
-        this.villes = villes;
+        this.ville = ville;
+    }
+    public Infos(Ville ville) {
+        this.idInfos=autoId++;
+        this.ville = ville;
     }
 
     public int getIdInfos() {
@@ -32,12 +36,12 @@ public class Infos {
         this.dateDepart = dateDepart;
     }
 
-    public List<Ville> getVilles() {
-        return villes;
+    public Ville getVille() {
+        return ville;
     }
 
-    public void setVilles(List<Ville> villes) {
-        this.villes = villes;
+    public void setVille(Ville ville) {
+        this.ville = ville;
     }
 
     @Override
