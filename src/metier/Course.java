@@ -241,16 +241,20 @@ public class Course {
      * Sup coureur.
      * <p>
      * cette méthode reçoit un coureur en paramètre et le supprime de la liste des classements
+     * renvoie true si l'opération a pu être réalisée.
      *
      * @param coureur coureur
      */
-    public void supCoureur(Coureur coureur) {
+    public boolean supCoureur(Coureur coureur) {
+        boolean trouve = false;
         for(int i=0;i<listeClassement.size();i++){
             Classement classement = listeClassement.get(i);
             if(classement.getCoureur().equals(coureur)){
                 listeClassement.remove(i);
+                trouve = true;
             }
         }
+        return trouve;
     }
 
     /**
@@ -274,7 +278,7 @@ public class Course {
      * cette méthode reçoit en paramètre un coureur, sa nouvelle place et ses nouveaux gains
      * elle parcourt la liste des classement pour trouver le coureur
      * si le coureur est trouvé les anciennes données (place et gain) sont remplacées par les nouvelles données
-     * sinon un message s'affiche.
+     * renvoie true si l'opération a pu être réalisé, ou false si le coureur n'a pas été trouvé.
      *
      * @param coureur coureur
      * @param place   place
@@ -308,17 +312,21 @@ public class Course {
      * Sup ville.
      * <p>
      * cette méthode reçoit une ville en paramètre et supprime la ville de la liste d'infos
+     * renvoie true si l'opération a pu être réalisée.
      *
      * @param ville ville
      */
-    public void supVille(Ville ville) {
+    public boolean supVille(Ville ville) {
+        boolean trouve = false;
+
         for(int i=0;i<listeInfos.size();i++){
             Infos infos = listeInfos.get(i);
             if(infos.getVille().equals(ville)){
                 listeInfos.remove(i);
+                trouve = true;
             }
         }
-
+        return trouve;
     }
 
     /**
@@ -326,16 +334,20 @@ public class Course {
      * <p>
      * cette méthode reçoit en paramètre une ville et une nouvelle date
      * elle recherche ensuite la ville correspondante et remplace l'ancienne date par la nouvelle
+     * renvoie true si l'opération a pu être réalisée.
      *
      * @param date  date
      * @param ville ville
      */
-    public void modifVille(LocalDate date, Ville ville) {
+    public boolean modifVille(LocalDate date, Ville ville) {
+        boolean trouve = false;
         for (int i = 0; i < listeInfos.size(); i++) {
             if(listeInfos.get(i).getVille().equals(ville)){
                 listeInfos.get(i).setDateDepart(date);
+                trouve = true;
             }
         }
+        return trouve;
     }
     /**
      * Liste ville.

@@ -53,15 +53,6 @@ public class CoureurPlaceGain {
     }
 
     /**
-     * setter coureur.
-     *
-     * @param coureur coureur
-     */
-    public void setCoureur(Coureur coureur) {
-        this.coureur = coureur;
-    }
-
-    /**
      * getter place.
      *
      * @return place
@@ -70,14 +61,6 @@ public class CoureurPlaceGain {
         return place;
     }
 
-    /**
-     * setter place.
-     *
-     * @param place place
-     */
-    public void setPlace(int place) {
-        this.place = place;
-    }
 
     /**
      * getter gain.
@@ -88,12 +71,4 @@ public class CoureurPlaceGain {
         return gain;
     }
 
-    /**
-     * setter gain.
-     *
-     * @param gain gain
-     */
-    public void setGain(BigDecimal gain) {
-        this.gain = gain;
-    }
 }
