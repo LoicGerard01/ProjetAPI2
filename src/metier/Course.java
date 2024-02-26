@@ -37,29 +37,11 @@ public class Course {
     /**
      * liste des infos sur la course.
      */
-    protected List<Infos> listeInfos;
+    protected List<Infos> listeInfos = new ArrayList<>();
     /**
      * liste des classement concernant la course.
      */
-    protected List<Classement> listeClassement;
-
-    /**
-     * constructeur paramétré.
-     *
-     * @param nom        nom
-     * @param priceMoney price money
-     * @param km         km
-     * @param infos      infos
-     * @param classement classement
-     */
-    public Course(String nom, BigDecimal priceMoney, int km, List<Infos> infos, List<Classement> classement) {
-        this.idCourse = autoId++;
-        this.nom = nom;
-        this.priceMoney = priceMoney;
-        this.km = km;
-        this.listeInfos = infos;
-        this.listeClassement = classement;
-    }
+    protected List<Classement> listeClassement = new ArrayList<>();
 
     /**
      * constructeur paramétré.
@@ -263,7 +245,12 @@ public class Course {
      * @param coureur coureur
      */
     public void supCoureur(Coureur coureur) {
-        listeClassement.remove(coureur);
+        for(int i=0;i<listeClassement.size();i++){
+            Classement classement = listeClassement.get(i);
+            if(classement.getCoureur().equals(coureur)){
+                listeClassement.remove(i);
+            }
+        }
     }
 
     /**
@@ -293,14 +280,16 @@ public class Course {
      * @param place   place
      * @param gain    gain
      */
-    public void modif(Coureur coureur, int place, BigDecimal gain) {
+    public boolean modif(Coureur coureur, int place, BigDecimal gain) {
 
         int pos = listeClassement.indexOf(coureur);
         if (pos == -1) {
-            System.out.println("Le coureur n'est pas dans la liste");
+            //System.out.println("Le coureur n'est pas dans la liste");
+            return false;
         } else {
             listeClassement.get(pos).setPlace(place);
             listeClassement.get(pos).setGain(gain);
+            return true;
         }
     }
 
@@ -323,26 +312,31 @@ public class Course {
      * @param ville ville
      */
     public void supVille(Ville ville) {
-        listeInfos.remove(ville);
+        for(int i=0;i<listeInfos.size();i++){
+            Infos infos = listeInfos.get(i);
+            if(infos.getVille().equals(ville)){
+                listeInfos.remove(i);
+            }
+        }
+
     }
 
     /**
      * Modif ville.
      * <p>
-     * cette méthode reçoit en paramètre une date et une nouvelle ville
-     * elle recherche ensuite la ville correspondant à la date reçue et remplace l'ancienne ville par la nouvelle
+     * cette méthode reçoit en paramètre une ville et une nouvelle date
+     * elle recherche ensuite la ville correspondante et remplace l'ancienne date par la nouvelle
      *
      * @param date  date
      * @param ville ville
      */
     public void modifVille(LocalDate date, Ville ville) {
         for (int i = 0; i < listeInfos.size(); i++) {
-            if (listeInfos.get(i).getDateDepart().equals(date)) {
-                listeInfos.get(i).setVille(ville);
+            if(listeInfos.get(i).getVille().equals(ville)){
+                listeInfos.get(i).setDateDepart(date);
             }
         }
     }
-
     /**
      * Liste ville.
      * <p>

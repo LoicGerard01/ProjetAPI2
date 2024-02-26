@@ -18,13 +18,13 @@ public class Classement {
      */
     protected int idClassement;
     /**
-     * placement du coureur dans le classement.
+     * placement du coureur dans le classement ( initialisé à zéro ).
      */
     protected int place = 0;
     /**
      * gain du coureur.
      */
-    protected BigDecimal gain;
+    protected BigDecimal gain ;
     /**
      * coureur associé au classement.
      */

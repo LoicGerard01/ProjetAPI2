@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class Ville {
     /**
      * liste des coureurs provenant de cette ville.
      */
-    protected List<Coureur> coureurs;
+    protected List<Coureur> coureurs = new ArrayList<>();
 
     /**
      * constructeur paramétré.
