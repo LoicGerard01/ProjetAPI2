@@ -285,16 +285,16 @@ public class Course {
      * @param gain    gain
      */
     public boolean modif(Coureur coureur, int place, BigDecimal gain) {
-
-        int pos = listeClassement.indexOf(coureur);
-        if (pos == -1) {
-            //System.out.println("Le coureur n'est pas dans la liste");
-            return false;
-        } else {
-            listeClassement.get(pos).setPlace(place);
-            listeClassement.get(pos).setGain(gain);
-            return true;
+        boolean trouve = false;
+        for(int i=0;i<listeClassement.size();i++){
+            Classement classement = listeClassement.get(i);
+            if(classement.getCoureur().equals(coureur)){
+                listeClassement.get(i).setPlace(place);
+                listeClassement.get(i).setGain(gain);
+                trouve = true;
+            }
         }
+        return trouve;
     }
 
     /**
