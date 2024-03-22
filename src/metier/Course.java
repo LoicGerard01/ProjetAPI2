@@ -33,7 +33,7 @@ public class Course {
     /**
      * longueur de la course en km
      */
-    protected int km;
+    protected Integer km;
     /**
      * liste des infos sur la course.
      */
@@ -385,6 +385,18 @@ public class Course {
 
         return true;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "idCourse=" + idCourse +
+                ", nom='" + nom + '\'' +
+                ", priceMoney=" + priceMoney +
+                ", km=" + km +
+                ", listeInfos=" + listeInfos +
+                ", listeClassement=" + listeClassement +
+                '}';
     }
 }
 
