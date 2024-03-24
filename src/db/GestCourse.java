@@ -11,7 +11,7 @@ public class GestCourse {
     private Scanner sc = new Scanner(System.in);
     private Connection dbConnect;
 
-    public void gestion() throws SQLException {
+    public void gestion(){
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.exit(1);
@@ -46,7 +46,7 @@ public class GestCourse {
             }
         } while (true);
     }
-    public void ajout() throws SQLException {
+    public void ajout() {
         System.out.println("nom de la course :");
         String nom = sc.nextLine();
         System.out.println("Cash Prize : ");
@@ -102,6 +102,63 @@ public class GestCourse {
 
     }
     public void modification(){
+        int choix = 0;
+        String nom = " " , query = " ";
+        BigDecimal priceMoney = new BigDecimal(0) ;
+        int km = 0;
+
+        System.out.println("id du client recherché");
+        int idrech = sc.nextInt();
+
+        sc.skip("\n");
+        do{
+            System.out.println("1.Changement du nom ");
+            System.out.println("2.Changement du cash prize ");
+            System.out.println("3.Changement de la taille en km ");
+            System.out.println("Choix ?");
+            choix = sc.nextInt();
+            sc.skip("\n");
+        }while (choix < 0 || choix >3);
+        switch (choix){
+            case 1:
+                System.out.println("Nouveau nom ?");
+                nom = sc.nextLine();
+                query="update API_COURSE set nom=? where idcourse = ?";
+                break;
+            case 2:
+                System.out.println("Nouveau cash prize ?");
+                priceMoney = sc.nextBigDecimal();
+                query="update API_COURSE set priceMoney=? where idcourse = ?";
+                break;
+            case 3:
+                System.out.println("Nouvelle longueur ?");
+                km = sc.nextInt();
+                query="update API_COURSE set km=? where idcourse = ?";
+                break;
+        }
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)){
+            switch (choix){
+                case 1 :
+                    pstm.setString(1,nom);
+                    pstm.setInt(2,idrech);
+                    break;
+                case 2 :
+                    pstm.setBigDecimal(1,priceMoney);
+                    pstm.setInt(2,idrech);
+                    break;
+                case 3:
+                    pstm.setInt(1,km);
+                    pstm.setInt(2,idrech);
+                    break;
+            }
+            int n = pstm.executeUpdate();
+            if(n!=0) System.out.println(n+ "ligne mise a jour");
+            else System.out.println("record introuvable");
+
+        }catch (SQLException e){
+            System.out.println("erreur sql : "+ e);
+        }
+
 
     }
     public void suppression(){
