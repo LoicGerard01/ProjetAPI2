@@ -3,6 +3,7 @@ package db;
 import metier.Course;
 import myconnections.DBConnection;
 
+import javax.swing.plaf.nimbus.State;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.Scanner;
@@ -107,7 +108,7 @@ public class GestCourse {
         BigDecimal priceMoney = new BigDecimal(0) ;
         int km = 0;
 
-        System.out.println("id du client recherché");
+        System.out.println("id de la course recherché");
         int idrech = sc.nextInt();
 
         sc.skip("\n");
@@ -118,7 +119,7 @@ public class GestCourse {
             System.out.println("Choix ?");
             choix = sc.nextInt();
             sc.skip("\n");
-        }while (choix < 0 || choix >3);
+        }while (choix <= 0 || choix >3);
         switch (choix){
             case 1:
                 System.out.println("Nouveau nom ?");
@@ -162,9 +163,33 @@ public class GestCourse {
 
     }
     public void suppression(){
+        System.out.println("id de la course ?");
+        int idrech = sc.nextInt();
+        String query = "delete from API_COURSE where idcourse = ?";
+        try(PreparedStatement pstm =dbConnect.prepareStatement(query)){
+            pstm.setInt(1,idrech);
+            int n=pstm.executeUpdate();
+            if(n!=0) System.out.println(n+ "ligne supprimée");
+            else System.out.println("record introuvable");
+        }catch (SQLException e){
+            System.out.println("erreur sql :" +e);
+        }
 
     }
     private void tous(){
+        String query="select * from API_COURSE";
+        try(Statement stm = dbConnect.createStatement()) {
+            ResultSet rs = stm.executeQuery(query);
+            while (rs.next()) {
+                String nom = rs.getString(2);
+                BigDecimal price = rs.getBigDecimal(3);
+                int km = rs.getInt(4);
+                Course course = new Course(nom, price, km);
+                System.out.println(course);
+            }
+        } catch (SQLException e){
+            System.out.println("erreur sql : "+e);
+        }
 
     }
 
